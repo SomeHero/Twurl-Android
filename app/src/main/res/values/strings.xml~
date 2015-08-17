@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">Twurl</string>
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="title_activity_view_article">ViewArticle</string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <string name="twurl_title">twurl</string>
+
+
+
+    <string name="send_to">Share article via ...</string>
+
+    <string name="exit_article_view">&#xf00d;</string>
+    <string name="facebook_icon">&#xf09a;</string>
+    <string name="twitter_icon">&#xf099;</string>
+    <string name="mail_icon">&#xf003;</string>
+    <string name="other_share_icon">&#xf045;</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="TWITTER_KEY">CxCFYI3grnPy1PgubE1WNanFL</string>
+    <string name="TWITTER_SECRET">61KGnIiKePyF85J3yJj8B2SC1TZoq2kltt65pxKyhMEgcAxY33</string>
+    <string name="mix_panel_project_token">da0bb2fe2aeb329129dad7c2f672d4ec</string>
+    <string name="facebook_app_id">953553218000332</string>
+    <string name="google_analytics_tracker_id">UA-66149030-1</string>
+
+    <string name="facebook_share_action_id">facebook share</string>
+    <string name="twitter_share_action_id">twitter share</string>
+    <string name="email_share_action_id">email share</string>
+    <string name="other_share_action_id">other share</string>
+
+    <string name="article_category_id">view article</string>
+    <string name="article_action_id">view article action</string>
+    <string name="article_label_id">view article label</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="network_failed">Sorry, something went wrong</string>
+
+</resources>

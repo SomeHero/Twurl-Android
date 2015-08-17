@@ -1,0 +1,195 @@
+package com.example.twurl;
+
+
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
+
+import com.example.twurl.app.AppController;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+
+
+public class ViewArticle extends Activity {
+
+    String url;
+    String imageUrl;
+    String headline;
+    ShareDialog shareDialog;
+    Typeface font;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_view_article);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        url = intent.getStringExtra("url");
+        headline = intent.getStringExtra("headline");
+        imageUrl = intent.getStringExtra("imageUrl");
+        setWebView();
+        font = Typeface.createFromAsset(getAssets(), "fonts/FontAwesome.ttf");
+        initEmailShare();
+        initFacebookShare();
+        initTwitterShare();
+        initOtherShare();
+        initBackToFeed();
+        initAdView();
+    }
+
+    public void initAdView() {
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.transition.pull_in_from_top, R.transition.push_out_bottom);
+    }
+
+    public void initFacebookShare() {
+        Button button = (Button) findViewById(R.id.shareFacebook);
+        button.setTypeface(font);
+        //share url as contentUrl headline_image_url as imageUrl, and headline as contentTitle
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareOnFacebook();
+            }
+        });
+    }
+
+    public void shareOnFacebook() {
+        trackSocialSharing(getString(R.string.facebook_share_action_id));
+        shareDialog = new ShareDialog(this);
+        ShareLinkContent shareContent = new ShareLinkContent.Builder()
+                .setContentUrl(Uri.parse(url))
+                .setImageUrl(Uri.parse(imageUrl))
+                .setContentTitle(headline)
+                .build();
+        if (shareDialog.canShow(ShareLinkContent.class)) {
+            shareDialog.show(shareContent);
+        }
+    }
+
+    public void initTwitterShare() {
+        Button button = (Button) findViewById(R.id.shareTwitter);
+        button.setTypeface(font);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    shareOnTwitter();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void shareOnTwitter() throws MalformedURLException {
+        trackSocialSharing(getString(R.string.twitter_share_action_id));
+        TweetComposer.Builder builder = new TweetComposer.Builder(this)
+                .text(headline)
+                .url(new URL(url));
+        builder.show();
+    }
+
+    public void initEmailShare() {
+        Button button = (Button) findViewById(R.id.shareEmail);
+        button.setTypeface(font);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareEmail();
+            }
+        });
+    }
+
+    public void shareEmail() {
+        trackSocialSharing(getString(R.string.email_share_action_id));
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
+        intent.putExtra(Intent.EXTRA_TEXT, "Thought you'd want to see this... " + url);
+        intent.setType("text/plain");
+        startActivity(intent);
+    }
+
+    public void initOtherShare() {
+        Button button = (Button) findViewById(R.id.otherShare);
+        button.setTypeface(font);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareOther();
+            }
+        });
+    }
+
+    public void shareOther() {
+        trackSocialSharing(getString(R.string.other_share_action_id));
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, "Thought you'd want to see this... "  + url);
+        intent.setType("text/plain");
+        startActivity(Intent.createChooser(intent, getResources().getString(R.string.send_to)));
+    }
+
+    public void initBackToFeed() {
+        Button button = (Button) findViewById(R.id.exitArticle);
+        button.setTypeface(font);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backToFeed();
+            }
+
+        });
+    }
+
+    public void backToFeed() {
+        finish();
+        overridePendingTransition(R.transition.pull_in_from_top, R.transition.push_out_bottom);
+    }
+
+
+    public void setWebView() {
+        WebView webview = (WebView) findViewById(R.id.articleWebView);
+        webview.setWebViewClient(new WebViewClient());
+        WebSettings settings = webview.getSettings();
+        settings.setJavaScriptEnabled(true);
+        webview.loadUrl(url);
+    }
+
+    private void trackSocialSharing(String categoryId) {
+        // Get tracker.
+        Tracker t = ((AppController) getApplication()).getTracker();
+        // Build and send an Event.
+        t.send(new HitBuilders.EventBuilder()
+                .setCategory(categoryId)
+                .setAction(url)
+                .build());
+    }
+
+}

@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Twurl</string>
+
+    
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="title_activity_view_article">ViewArticle</string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <string name="twurl_title">twurl</string>
+
+
+
+    <string name="send_to">Share article via ...</string>
+
+    <string name="exit_article_view">&#xf00d;</string>
+    <string name="facebook_icon">&#xf09a;</string>
+    <string name="twitter_icon">&#xf099;</string>
+    <string name="mail_icon">&#xf003;</string>
+    <string name="other_share_icon">&#xf045;</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="action_settings">Settings</string>
+    
+
+    <!-- replace various keys and tokens with your own credential -->
+    <string name="TWITTER_KEY"><!-- insert twiiter key here --></string>
+    <string name="TWITTER_SECRET"><!-- insert twitter secret here --></string>
+    <string name="mix_panel_project_token"><!-- insert mix panel project token --></string>
+    <string name="facebook_app_id"><!--insert facebook app id --></string>
+    <string name="google_analytics_tracker_id"><!-- insert google analytics tracker id here--></string>
+    <string name="banner_ad_unit_id"><!-- insert admob banner ad unit id here --></string>
+    
+    <!-- these strings are the tags by which the various tracked events are identified on google analytics. For each share event, the category is set to what you see here, and the action id is set to the shared url. To change the action id, please look at ViewArticle.java -->
+    <string name="facebook_share_category_id">facebook share</string>
+    <string name="twitter_share_category_id">twitter share</string>
+    <string name="email_share_category_id">email share</string>
+    <string name="other_share_category_id">other share</string>
+    
+    <!-- for article view events, the category id is as you see below and the action id is set to the shared url -->
+    <string name="article_category_id">view article</string>
+   
+    <string name="article_label_id">view article label</string>
+
+    
+
+    <string name="network_failed">Sorry, something went wrong</string>
+
+</resources>
